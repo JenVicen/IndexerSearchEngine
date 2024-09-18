@@ -22,7 +22,7 @@ public abstract class Document
         "being", "do", "does", "did", "does", "not", "all", "few", "more", "most",
         "such", "than", "then", "because", "due", "to", "for", "in", "fact", "so",
         "as", "well", "if", "when", "where", "how", "why", "that", "x", "y", "h", 
-        "k", "z", "v", "https", "www", "net"
+        "k", "z", "v", "https", "www", "net", "http", "com", "org"
     };
 
     // This is an array of unwanted chars in file Parsing for all documents
@@ -63,7 +63,7 @@ public abstract class Document
         }
     }
 
-    // Function in charge of returning the terms of a function
+    // Function in charge of returning the terms of a function, all stemmed words in the document 
     public List<string> GetTerms(){
         return NormalizedTerms;
     }
