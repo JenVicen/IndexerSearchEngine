@@ -10,7 +10,7 @@ public class TFIDF
     public Dictionary<Document, Dictionary<string, double>> DocumentTFIDFScores {get; private set; } = new Dictionary<Document, Dictionary<string, double>>(); 
     
     // Calculates the IDF and TFIDF of all terms in a list of documents
-    public void CalculateIDFandTFIDF(List<Document> documents)
+    public Dictionary<string, double> CalculateIDFandTFIDF(List<Document> documents)
     {
         int totalDocuments = documents.Count;
         var IDFValuesCount = new Dictionary<string,int> ();
@@ -45,6 +45,8 @@ public class TFIDF
             var tfidfScores = CalculateTFIDF(document);
             DocumentTFIDFScores[document] = tfidfScores;
         }
+
+        return IDFValues;
     }
 
     // Function that calculates the TFScores of terms inside a list of terms 

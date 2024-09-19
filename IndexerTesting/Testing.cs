@@ -1,4 +1,4 @@
-﻿public class Program
+﻿public class Testing
 {
     public static void Main(){
         // Ensure the file path is correct for the text file
