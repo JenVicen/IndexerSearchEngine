@@ -19,7 +19,8 @@ public class Indexer
         _supportedExtensions = new List<string> { ".txt", ".csv", ".xml", ".json", ".html", ".pdf" };
         _tfidfValues = new Dictionary<string,double> ();
     }
-    public void IndexFolder (string folderPath)
+
+    public void IndexFolder(string folderPath)
     {
         if (!Directory.Exists(folderPath))
         {
@@ -37,32 +38,66 @@ public class Indexer
         _tfidfValues = _tfidfHandler.CalculateIDFandTFIDF(_documents);
     }
 
+    public void LoadIndex(string indexPath)
+    {
+        if (!File.Exists(indexPath))
+        {
+            throw new FileNotFoundException($"Index file not found: {indexPath}");
+        }
+
+        // Cargar el índice desde el archivo
+        var indexData = File.ReadAllText(indexPath);
+        _tfidfValues = JsonSerializer.Deserialize<Dictionary<string, double>>(indexData);
+        // Aquí podrías cargar también los documentos si es necesario
+    }
+
+    public List<string> Search(string query, int k)
+    {
+        var queryDocument = new QueryDocument(query); // Crear un documento de consulta
+        var queryTfidf = _tfidfHandler.CalculateTFIDF(queryDocument);
+        var cosineSimilarity = new CosineSimilarity(_tfidfHandler);
+
+        // Calcular similitudes
+        var similarities = new Dictionary<Document, double>();
+        foreach (var document in _documents)
+        {
+            double similarity = cosineSimilarity.Calculate(queryDocument, document);
+            similarities[document] = similarity;
+        }
+
+        // Obtener los k documentos más similares
+        return similarities.OrderByDescending(x => x.Value)
+                           .Take(k)
+                           .Select(x => x.Key.FilePath) // Asumiendo que FilePath es la propiedad que quieres mostrar
+                           .ToList();
+    }
+
     private Document IndexFile(string filePath)
     {
         string extension = Path.GetExtension(filePath).ToLower();
-        Document File;
+        Document file = null;
         switch (extension)
         {
             case ".txt":
-                File = new TxtDocument(filePath);
+                file = new TxtDocument(filePath);
                 break;
             case ".csv":
-                File = new CsvDocument(filePath);
+                file = new CsvDocument(filePath);
                 break;
             case ".xml":
-                File = new XmlDocument(filePath);
+                file = new XmlDocument(filePath);
                 break;
             case ".json":
-                File = new JsonDocument(filePath);
+                file = new JsonDocument(filePath);
                 break;
             case ".html":
-                File = new HtmlDocument(filePath);
+                file = new HtmlDocument(filePath);
                 break;
             case ".pdf":
-                File = new PDFDocument(filePath);
+                file = new PDFDocument(filePath);
                 break;
         }
 
-        return null;
+        return file;
     }
 }
