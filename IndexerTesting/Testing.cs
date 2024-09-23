@@ -1,35 +1,57 @@
-﻿public class Testing
-{
-    public static void Main(){
-        // Ensure the file path is correct for the text file
-        string txtFilePath = "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerTesting/Example.txt";
-        
-        // Check if the text file exists before trying to read it
-        if (!File.Exists(txtFilePath)) {
-            Console.WriteLine("File not found: " + txtFilePath);
-            return; // Exit if the file does not exist
-        }
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-        TxtDocument txtDoc = new TxtDocument(txtFilePath);
-        Console.WriteLine("Processed Terms:");
-        foreach (var term in txtDoc.NormalizedTerms)
+public class Testing
+{
+    public static void Main()
+    {
+        // Define the folder path to index
+        string folderPath = "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerTesting";
+        
+        // Create an indexer instance
+        Indexer indexer = new Indexer();
+        
+        // Index the folder
+        try
         {
-            Console.WriteLine(term);
+            indexer.IndexFolder(folderPath);
+            Console.WriteLine("Indexing completed.");
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            Console.WriteLine(ex.Message);
+            return; // Exit if the folder does not exist
+        }
+        
+        // Display the IDF values
+        Console.WriteLine("IDF Values:");
+        foreach (var kvp in indexer.TFIDFHandler.IDFValues)
+        {
+            Console.WriteLine($"Term: {kvp.Key}, IDF: {kvp.Value}");
         }
         Console.WriteLine();
-        
-        // Ensure the file path is correct for the CSV file
-        string csvFilePath = "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerTesting/customers-100.csv";
-        // Check if the CSV file exists before trying to read it
-        if (!File.Exists(csvFilePath)) {
-            Console.WriteLine("File not found: " + csvFilePath);
-            return; // Exit if the file does not exist
-        }
 
-        CsvDocument csvDoc = new CsvDocument(csvFilePath);
-        foreach (var term in csvDoc.NormalizedTerms)
+        // Calculate cosine similarity between the first two indexed documents
+        if (indexer.Documents.Count >= 2)
         {
-            Console.WriteLine(term);
+            CosineSimilarity cosineSimilarity = new CosineSimilarity();
+
+            // Get the TF-IDF scores of the first two documents
+            var document1 = indexer.Documents[0];
+            var document2 = indexer.Documents[1];
+
+            var tfidfScores1 = indexer.TFIDFHandler.DocumentTFIDFScores[document1];
+            var tfidfScores2 = indexer.TFIDFHandler.DocumentTFIDFScores[document2];
+
+            // Calculate cosine similarity
+            double similarityScore = cosineSimilarity.CalculateCosineSimilarity(tfidfScores1, tfidfScores2);
+            Console.WriteLine($"Cosine Similarity between '{document1.FileName}' and '{document2.FileName}': {similarityScore}");
+        }
+        else
+        {
+            Console.WriteLine("Not enough documents indexed to calculate similarity.");
         }
     }
 }

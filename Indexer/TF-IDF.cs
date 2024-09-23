@@ -36,7 +36,7 @@ public class TFIDF
         // Calculating the IDF
         foreach (var term in IDFValuesCount.Keys)
         {
-            IDFValues[term] = Math.Log((double) totalDocuments / (1 + IDFValuesCount[term]));
+            IDFValues[term] = Math.Log((double) totalDocuments / (double)(1 + IDFValuesCount[term]));
         }
 
         // After calculating the IDF we can then begin calculating the TFIDF of all documents

@@ -19,6 +19,8 @@ public class Indexer
         _supportedExtensions = new List<string> { ".txt", ".csv", ".xml", ".json", ".html", ".pdf" };
         _tfidfValues = new Dictionary<string,double> ();
     }
+    public List<Document> Documents => _documents;
+    public TFIDF TFIDFHandler => _tfidfHandler; 
     public void IndexFolder (string folderPath)
     {
         if (!Directory.Exists(folderPath))
@@ -36,11 +38,10 @@ public class Indexer
 
         _tfidfValues = _tfidfHandler.CalculateIDFandTFIDF(_documents);
     }
-
     private Document IndexFile(string filePath)
     {
         string extension = Path.GetExtension(filePath).ToLower();
-        Document File;
+        Document File = null;
         switch (extension)
         {
             case ".txt":
@@ -63,6 +64,7 @@ public class Indexer
                 break;
         }
 
-        return null;
+        return File;
     }
+
 }

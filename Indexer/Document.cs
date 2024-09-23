@@ -4,6 +4,7 @@ using Porter2Stemmer;
 public abstract class Document 
 {
     public string FilePath { get; }
+    public string FileName => Path.GetFileName(FilePath);
     public string Content {get; protected set;}
     public List<string> NormalizedTerms {get; protected set; }
 
