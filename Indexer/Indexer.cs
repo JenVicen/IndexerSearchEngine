@@ -62,9 +62,23 @@ public class Indexer
             case ".pdf":
                 File = new PDFDocument(filePath);
                 break;
+            default:
+                break;
         }
 
         return File;
     }
 
+    // Recieves a query and a number of results to display 
+    public List<string> Search(string query, int k)
+    {
+        var query = new Query(query);
+        // no se si el resto sirva entonces se lo dejo asi Jen
+    }
+
+    public void LoadIndex(string indexPath)
+    {
+        // estaba pensando que podria ser una copia sobre los documentos existentes como la data de cada documento, y luego un calculo de todos los valores de nuevo
+        
+    }
 }

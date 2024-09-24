@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\Git Repositories\\IndexerSearchEngine\\IndexerSearchEngine.csproj": {}
   },
   "projects": {
-    "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\Git Repositories\\IndexerSearchEngine\\IndexerSearchEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Git Repositories\\IndexerSearchEngine\\IndexerSearchEngine.csproj",
         "projectName": "IndexerSearchEngine",
-        "projectPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
-        "packagesPath": "/Users/jennifervicentesvalle/.nuget/packages/",
-        "outputPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\Git Repositories\\IndexerSearchEngine\\IndexerSearchEngine.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\Git Repositories\\IndexerSearchEngine\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/jennifervicentesvalle/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -75,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/8.0.4/libexec/sdk/8.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
