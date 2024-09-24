@@ -8,9 +8,9 @@ using System.Text.Json;
 public class Indexer 
 {
     private readonly TFIDF _tfidfHandler;
-    private readonly List<Document> _documents;
+    private List<Document> _documents;
     private readonly List<string> _supportedExtensions;
-    private Dictionary<string, double> _tfidfValues;
+    public Dictionary<string, double> _tfidfValues;
 
     public Indexer()
     {
@@ -21,7 +21,7 @@ public class Indexer
     }
     public List<Document> Documents => _documents;
     public TFIDF TFIDFHandler => _tfidfHandler; 
-    public void IndexFolder (string folderPath)
+    public void IndexFolder(string folderPath)
     {
         if (!Directory.Exists(folderPath))
         {
@@ -29,14 +29,38 @@ public class Indexer
         }
 
         var files = Directory.GetFiles(folderPath, "*.*", SearchOption.AllDirectories)
-            .Where(file => _supportedExtensions.Contains(Path.GetExtension(file).ToLower()));
-        
+            .Where(file => _supportedExtensions.Contains(Path.GetExtension(file).ToLower()) && 
+                           Path.GetFileName(file) != "index.json"); // Exclude index.json
+
         foreach (var file in files)
         {
-            _documents.Add(IndexFile(file));
+            try
+            {
+                var document = IndexFile(file);
+                if (document != null)
+                {
+                    _documents.Add(document);
+                    Console.WriteLine($"Indexed: {file}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error indexing file {file}: {ex.Message}");
+            }
+        }
+
+        if (_documents.Count == 0)
+        {
+            Console.WriteLine("No documents indexed.");
+            return;
         }
 
         _tfidfValues = _tfidfHandler.CalculateIDFandTFIDF(_documents);
+
+        // Save the indexed data to a JSON file
+        string indexFilePath = Path.Combine(folderPath, "index.json");
+        SaveIndex(indexFilePath);
+        Console.WriteLine($"Index saved to: {indexFilePath}");
     }
     private Document IndexFile(string filePath)
     {
@@ -72,13 +96,112 @@ public class Indexer
     // Recieves a query and a number of results to display 
     public List<string> Search(string query, int k)
     {
-        var query = new Query(query);
-        // no se si el resto sirva entonces se lo dejo asi Jen
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            throw new ArgumentException("Query cannot be empty.");
+        }
+        Console.WriteLine($"This is your query: {query}");
+
+        var queryDocument = new Query(query);
+        Console.WriteLine($"This is your queryyyyy: {queryDocument}");
+        var queryTfidfScores = _tfidfHandler.CalculateTFIDF(queryDocument);
+        
+        // Debugging: Check if queryTfidfScores is populated
+        Console.WriteLine($"Query TF-IDF Scores count: {queryTfidfScores.Count}");
+
+        // Calculate cosine similarity for each document using loaded TF-IDF values
+        var cosineSimilarity = new CosineSimilarity();
+        var similarities = new List<(Document document, double similarity)>();
+
+        foreach (var document in _documents)
+        {
+            if (!_tfidfValues.TryGetValue(document.FileName, out var tfidfScore))
+            {
+                Console.WriteLine($"No TF-IDF scores found for document: {document.FileName}");
+                continue; // Skip this document if no scores are found
+            }
+
+            double similarity = cosineSimilarity.CalculateCosineSimilarity(queryTfidfScores, new Dictionary<string, double> { { document.FileName, tfidfScore } });
+            similarities.Add((document, similarity));
+        }
+
+        // Sort documents by similarity and take the top k results
+        return similarities.OrderByDescending(x => x.similarity)
+                           .Take(k)
+                           .Select(x => x.document.FileName)
+                           .ToList();
     }
 
     public void LoadIndex(string indexPath)
     {
-        // estaba pensando que podria ser una copia sobre los documentos existentes como la data de cada documento, y luego un calculo de todos los valores de nuevo
+        if (!File.Exists(indexPath))
+        {
+            throw new FileNotFoundException($"Index file not found: {indexPath}");
+        }
+
+        // Load the index data from the file
+        var indexData = File.ReadAllText(indexPath);
+        // Deserialize the index data to restore documents and TF-IDF values
+        (_documents, _tfidfValues) = DeserializeIndexData(indexData);
+
+        // Check if documents are loaded
+        if (_documents == null || !_documents.Any())
+        {
+            throw new InvalidOperationException("No documents loaded from the index.");
+        }
+    }
+
+    public (List<Document>, Dictionary<string, double>) DeserializeIndexData(string indexData)
+    {
+        // Assuming the indexData is in JSON format
+        var indexObject = JsonSerializer.Deserialize<IndexData>(indexData);
         
+        // Convert the deserialized data back into documents
+        var documents = new List<Document>();
+        foreach (var docData in indexObject.Documents)
+        {
+            Document document = docData.Extension switch
+            {
+                ".txt" => new TxtDocument(docData.FilePath),
+                ".csv" => new CsvDocument(docData.FilePath),
+                ".xml" => new XmlDocument(docData.FilePath),
+                ".json" => new JsonDocument(docData.FilePath),
+                ".html" => new HtmlDocument(docData.FilePath),
+                ".pdf" => new PDFDocument(docData.FilePath),
+                _ => throw new NotSupportedException($"Unsupported document type: {docData.Extension}")
+            };
+            documents.Add(document);
+        }
+
+        return (documents, indexObject.TFIDFValues);
+    }
+
+    // Class to represent the structure of the deserialized index data
+    private class IndexData
+    {
+        public List<DocumentData> Documents { get; set; }
+        public Dictionary<string, double> TFIDFValues { get; set; }
+    }
+
+    private class DocumentData
+    {
+        public string FilePath { get; set; }
+        public string Extension { get; set; }
+    }
+
+    public void SaveIndex(string indexPath)
+    {
+        var indexData = new IndexData
+        {
+            Documents = _documents.Select(doc => new DocumentData
+            {
+                FilePath = doc.FilePath,
+                Extension = Path.GetExtension(doc.FilePath).ToLower()
+            }).ToList(),
+            TFIDFValues = _tfidfValues
+        };
+
+        var json = JsonSerializer.Serialize(indexData, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(indexPath, json);
     }
 }

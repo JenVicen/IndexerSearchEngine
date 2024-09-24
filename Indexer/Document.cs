@@ -48,7 +48,7 @@ public abstract class Document
     protected abstract void GetFileContents();
 
     // Parse function is the same for all documents since contents contain the strings of the content.
-    private void Parse(){
+    public void Parse(){
         // Step 2: Split the content into an array of terms, all lowercased
         string[] words = Content.ToLower().Split(_splitChars, StringSplitOptions.RemoveEmptyEntries);
         

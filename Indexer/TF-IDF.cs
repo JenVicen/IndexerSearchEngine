@@ -71,7 +71,7 @@ public class TFIDF
 
         return tfScores;
     }
-    private Dictionary<string, double> CalculateTFIDF(Document document)
+    public Dictionary<string, double> CalculateTFIDF(Document document)
     {
         var tfScores = CalculateTFScores(document);
         var tfidfScores = new Dictionary<string, double>();
