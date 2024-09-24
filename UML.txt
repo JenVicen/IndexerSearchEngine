@@ -1,0 +1,53 @@
+@startuml
+
+class Document {
+    + string FilePath { get; }
+    + string FileName 
+    # string Content { get; protected set; }
+    # List<string> NormalizedTerms { get; protected set; }
+    # HashSet<string> StopWords
+    # char[] _splitChars
+    - EnglishProter2Stemmer _stemmer
+    + List<string> GetTerms()
+    + List<string> GetUniqueTerms()
+    {abstract} - void GetFileContents()
+    - void Parse()
+}
+class TxtDocument extends Document {
+    # override void GetFileContents()
+}
+class CsvDocument extends Document {
+    # override void GetFileContents()
+}
+class HtmlDocument extends Document {
+    # override void GetFileContents()
+}
+class PDFDocument extends Document {
+    # override void GetFileContents()
+}
+class JsonDocument extends Document {
+    # override void GetFileContents()
+}
+class XmlDocument extends Document {
+    # override void GetFileContents()
+}
+class Query extends Document {
+    # override void GetFileContents
+}
+class TFIDF {
+    - Dictionary<string, double> IDFValues {get; private set; }
+    - Dictionary<Document, Dictionary<string, double>> DocumentTFIDFScores {get; private set; }
+    + Dictionary<string, double> CalculateIDFandTFIDF(List<Document> documents)
+    - Dictionary<string, double> CalculateTFScores(Document document)
+    - Dictionary<string, double> CalculateTFIDF(Document document)
+}
+class CosineSimilarity {
+    + double CalculateCosineSimilarity(Dictionary<string, double> tfidfVector1, Dictionary<string, double> tfidfVector2)
+}
+
+Indexer --> Document : Indexes *
+Indexer --> TFIDF : uses >
+Indexer --> CosineSimilarity : uses >
+CosineSimilarity --> TFIDF : uses terms from >
+
+@enduml

@@ -34,7 +34,7 @@ public abstract class Document
     '•', '«', '»', '¨', '©', '®', '™', '©', '°', '¤', '£', '¥', '₣', '₤'};
 
     // Library that uses the Porter2Stemmer algorithm for Natural Language Processing
-    protected readonly EnglishPorter2Stemmer _stemmer = new EnglishPorter2Stemmer();
+    private readonly EnglishPorter2Stemmer _stemmer = new EnglishPorter2Stemmer();
 
     public Document(string filePath)
     {

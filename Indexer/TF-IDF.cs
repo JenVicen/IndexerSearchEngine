@@ -6,7 +6,7 @@ using iText.Forms.Fields;
 
 public class TFIDF 
 {   
-    public Dictionary<string, double> IDFValues {get; set; } = new Dictionary<string, double>();
+    public Dictionary<string, double> IDFValues {get; private set; } = new Dictionary<string, double>();
     public Dictionary<Document, Dictionary<string, double>> DocumentTFIDFScores {get; private set; } = new Dictionary<Document, Dictionary<string, double>>(); 
     
     // Calculates the IDF and TFIDF of all terms in a list of documents
