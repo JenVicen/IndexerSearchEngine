@@ -4,7 +4,7 @@ using Porter2Stemmer;
 public abstract class Document 
 {
     public string FilePath { get; }
-    public string FileName => Path.GetFileName(FilePath);
+    public string FileName => FilePath != null ? Path.GetFileName(FilePath): "No file";
     public string Content {get; protected set;}
     public List<string> NormalizedTerms {get; protected set; }
 
@@ -36,16 +36,23 @@ public abstract class Document
     // Library that uses the Porter2Stemmer algorithm for Natural Language Processing
     private readonly EnglishPorter2Stemmer _stemmer = new EnglishPorter2Stemmer();
 
-    public Document(string filePath)
+    // Default constructor for derived classes to initialize themselves
+    public Document() 
     {
-        FilePath = filePath;
         NormalizedTerms = new List<string>();
+    }
+
+    // Constructor with optional filePath for other document types, for chaining the original constructor
+    public Document(string filePath) : this()
+    {   
+        FilePath = filePath;
         GetFileContents();
         Parse();
     }
 
     // Each type of document is in charge of getting its own contents
     protected abstract void GetFileContents();
+
 
     // Parse function is the same for all documents since contents contain the strings of the content.
     public void Parse(){

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj": {}
+    "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj": {}
   },
   "projects": {
-    "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj": {
+    "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
+        "projectUniqueName": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj",
         "projectName": "IndexerSearchEngine",
-        "projectPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
-        "packagesPath": "/Users/jennifervicentesvalle/.nuget/packages/",
-        "outputPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/",
+        "projectPath": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj",
+        "packagesPath": "/Users/dampmaringmail.com/.nuget/packages/",
+        "outputPath": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/jennifervicentesvalle/.nuget/NuGet/NuGet.Config"
+          "/Users/dampmaringmail.com/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -75,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/8.0.4/libexec/sdk/8.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

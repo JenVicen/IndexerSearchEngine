@@ -80,3 +80,44 @@ C:/Users/Usuario/Desktop/Git Repositories/IndexerSearchEngine/bin/Debug/net8.0/N
 /Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.csproj.CopyComplete
 /Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.genruntimeconfig.cache
 /Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/Debug/net8.0/ref/IndexerSearchEngine.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/IndexerSearchEngine
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/IndexerSearchEngine.deps.json
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/IndexerSearchEngine.runtimeconfig.json
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/IndexerSearchEngine.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/IndexerSearchEngine.pdb
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/CsvHelper.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/HtmlAgilityPack.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.barcodes.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.bouncy-castle-connector.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.forms.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.io.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.kernel.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.layout.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.pdfa.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.pdfua.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.sign.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.styledxmlparser.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.svg.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/itext.commons.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.DotNet.PlatformAbstractions.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.DependencyModel.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.Logging.Abstractions.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Microsoft.Extensions.Primitives.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Newtonsoft.Json.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/bin/Debug/net8.0/Porter2Stemmer.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.csproj.AssemblyReference.cache
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.GeneratedMSBuildEditorConfig.editorconfig
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.AssemblyInfoInputs.cache
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.AssemblyInfo.cs
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.csproj.CoreCompileInputs.cache
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.sourcelink.json
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerS.6981F533.Up2Date
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/refint/IndexerSearchEngine.dll
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.pdb
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/IndexerSearchEngine.genruntimeconfig.cache
+/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/Debug/net8.0/ref/IndexerSearchEngine.dll
