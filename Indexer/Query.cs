@@ -4,7 +4,7 @@ public class Query : Document
     {
         if (string.IsNullOrWhiteSpace(query))
         {
-            throw new ArgumentException("Query cannot be null or empty.JAJAJJAJJAJJ");
+            throw new ArgumentException("Query cannot be null or empty.");
         }
         
         Content = query; // Assign the query to the content
