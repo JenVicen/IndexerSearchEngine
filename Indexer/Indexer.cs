@@ -106,7 +106,7 @@ public class Indexer
         var normalizedQuery = NormalizeQuery(query);
         
         // Create a temporary document for the query
-        var queryDocument = new QueryDocument(normalizedQuery);
+        var queryDocument = new Query(normalizedQuery);
         var queryTFIDFScores = _tfidfHandler.CalculateTFIDF(queryDocument);
 
         var cosineSimilarity = new CosineSimilarity();
@@ -128,26 +128,8 @@ public class Indexer
         return results.OrderByDescending(r => r.Similarity).Take(k).Select(r => r.FileName).ToList();
     }
 
-    // Temporary derived class for query purposes
-    private class QueryDocument : Document
-    {
-        public QueryDocument(string content)
-        {
-            Content = content;
-            NormalizedTerms = new List<string>(content.Split(' ')); // Simple split for demonstration
-        }
-
-        protected override void GetFileContents() 
-        {
-            // No implementation needed for query document
-        }
-    }
-
-    // Método para normalizar la consulta
     private string NormalizeQuery(string query)
     {
-        // Aquí puedes aplicar la misma lógica de normalización que se usa en los documentos
-        // Por simplicidad, solo se convierte a minúsculas
         return query.ToLower();
     }
 
