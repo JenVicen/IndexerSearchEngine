@@ -102,34 +102,53 @@ public class Indexer
         }
         Console.WriteLine($"This is your query: {query}");
 
-        var queryDocument = new Query(query);
-        Console.WriteLine($"This is your queryyyyy: {queryDocument}");
-        var queryTfidfScores = _tfidfHandler.CalculateTFIDF(queryDocument);
+        // Normalizar la consulta
+        var normalizedQuery = NormalizeQuery(query);
         
-        // Debugging: Check if queryTfidfScores is populated
-        Console.WriteLine($"Query TF-IDF Scores count: {queryTfidfScores.Count}");
+        // Create a temporary document for the query
+        var queryDocument = new QueryDocument(normalizedQuery);
+        var queryTFIDFScores = _tfidfHandler.CalculateTFIDF(queryDocument);
 
-        // Calculate cosine similarity for each document using loaded TF-IDF values
         var cosineSimilarity = new CosineSimilarity();
-        var similarities = new List<(Document document, double similarity)>();
+        var results = new List<(string FileName, double Similarity)>();
 
         foreach (var document in _documents)
         {
-            if (!_tfidfValues.TryGetValue(document.FileName, out var tfidfScore))
+            var documentTFIDFScores = _tfidfHandler.CalculateTFIDF(document);
+            double similarity = cosineSimilarity.CalculateCosineSimilarity(queryTFIDFScores, documentTFIDFScores);
+            
+            // Only add documents with a similarity greater than zero
+            if (similarity > 0)
             {
-                Console.WriteLine($"No TF-IDF scores found for document: {document.FileName}");
-                continue; // Skip this document if no scores are found
+                results.Add((document.FileName, similarity));
             }
-
-            double similarity = cosineSimilarity.CalculateCosineSimilarity(queryTfidfScores, new Dictionary<string, double> { { document.FileName, tfidfScore } });
-            similarities.Add((document, similarity));
         }
 
-        // Sort documents by similarity and take the top k results
-        return similarities.OrderByDescending(x => x.similarity)
-                           .Take(k)
-                           .Select(x => x.document.FileName)
-                           .ToList();
+        // Ordenar los resultados por similitud y devolver los primeros k
+        return results.OrderByDescending(r => r.Similarity).Take(k).Select(r => r.FileName).ToList();
+    }
+
+    // Temporary derived class for query purposes
+    private class QueryDocument : Document
+    {
+        public QueryDocument(string content)
+        {
+            Content = content;
+            NormalizedTerms = new List<string>(content.Split(' ')); // Simple split for demonstration
+        }
+
+        protected override void GetFileContents() 
+        {
+            // No implementation needed for query document
+        }
+    }
+
+    // Método para normalizar la consulta
+    private string NormalizeQuery(string query)
+    {
+        // Aquí puedes aplicar la misma lógica de normalización que se usa en los documentos
+        // Por simplicidad, solo se convierte a minúsculas
+        return query.ToLower();
     }
 
     public void LoadIndex(string indexPath)

@@ -4743,19 +4743,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/dampmaringmail.com/.nuget/packages/": {}
+    "/Users/jennifervicentesvalle/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj",
+      "projectUniqueName": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
       "projectName": "IndexerSearchEngine",
-      "projectPath": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/IndexerSearchEngine.csproj",
-      "packagesPath": "/Users/dampmaringmail.com/.nuget/packages/",
-      "outputPath": "/Users/dampmaringmail.com/Desktop/Object Oriented Programming/Repos/IndexerSearchEngine/obj/",
+      "projectPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/IndexerSearchEngine.csproj",
+      "packagesPath": "/Users/jennifervicentesvalle/.nuget/packages/",
+      "outputPath": "/Users/jennifervicentesvalle/Desktop/TTU/Object-Oriented Programming/IndexerSearchEngine/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/dampmaringmail.com/.nuget/NuGet/NuGet.Config"
+        "/Users/jennifervicentesvalle/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -4773,11 +4773,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -4821,7 +4816,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/8.0.4/libexec/sdk/8.0.104/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
