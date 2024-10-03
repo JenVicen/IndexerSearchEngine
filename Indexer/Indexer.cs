@@ -2,27 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Text.Json;
 
 public class Indexer 
 {
-    private readonly TFIDF _tfidfHandler;
+    private Vectorizer _vectorizerHandler;
     private List<Document> _documents;
     private readonly List<string> _supportedExtensions;
     public Dictionary<string, double> _tfidfValues;
 
     public Indexer()
     {
-        _tfidfHandler = new TFIDF();
         _documents = new List<Document>();
         _supportedExtensions = new List<string> { ".txt", ".csv", ".xml", ".json", ".html", ".pdf" };
-        _tfidfValues = new Dictionary<string,double> ();
+        _tfidfValues = new Dictionary<string,double>();
     }
+
     public List<Document> Documents => _documents;
-    public TFIDF TFIDFHandler => _tfidfHandler; 
-    public void IndexFolder(string folderPath)
+
+    public void IndexFolder(string folderPath, string type, string distance)
     {
+        // Limpiar documentos antes de indexar
+        _documents.Clear(); // Asegúrate de que la lista esté vacía antes de indexar
+
         if (!Directory.Exists(folderPath))
         {
             throw new DirectoryNotFoundException($"Directory not found: {folderPath}");
@@ -55,46 +57,61 @@ public class Indexer
             return;
         }
 
-        _tfidfValues = _tfidfHandler.CalculateIDFandTFIDF(_documents);
+        // Initialize the vectorizer based on the type
+        if (type == "tfidf")
+        {
+            _vectorizerHandler = new TFIDF();
+        }
+        else if (type == "vectorizer")
+        {
+            _vectorizerHandler = new NormalizedBagOfWords(); // O cualquier otra implementación de Vectorizer
+        }
+        else
+        {
+            throw new ArgumentException("Unsupported type. Use 'tfidf' or 'vectorizer'.");
+        }
+
+        // Vectorize documents
+        _tfidfValues = _vectorizerHandler.VectorizeDocuments(_documents);
 
         // Save the indexed data to a JSON file
         string indexFilePath = Path.Combine(folderPath, "index.json");
-        SaveIndex(indexFilePath);
+        SaveIndex(indexFilePath); // Asegúrate de que esto se llame aquí
         Console.WriteLine($"Index saved to: {indexFilePath}");
     }
+
     private Document IndexFile(string filePath)
     {
         string extension = Path.GetExtension(filePath).ToLower();
-        Document File = null;
+        Document file = null;
         switch (extension)
         {
             case ".txt":
-                File = new TxtDocument(filePath);
+                file = new TxtDocument(filePath);
                 break;
             case ".csv":
-                File = new CsvDocument(filePath);
+                file = new CsvDocument(filePath);
                 break;
             case ".xml":
-                File = new XmlDocument(filePath);
+                file = new XmlDocument(filePath);
                 break;
             case ".json":
-                File = new JsonDocument(filePath);
+                file = new JsonDocument(filePath);
                 break;
             case ".html":
-                File = new HtmlDocument(filePath);
+                file = new HtmlDocument(filePath);
                 break;
             case ".pdf":
-                File = new PDFDocument(filePath);
+                file = new PDFDocument(filePath);
                 break;
             default:
                 break;
         }
 
-        return File;
+        return file;
     }
 
-    // Recieves a query and a number of results to display 
-    public List<string> Search(string query, int k)
+    public List<string> Search(string query, int k, string distance)
     {
         if (string.IsNullOrWhiteSpace(query))
         {
@@ -102,29 +119,24 @@ public class Indexer
         }
         Console.WriteLine($"This is your query: {query}");
 
-        // Normalizar la consulta
         var normalizedQuery = NormalizeQuery(query);
-        
-        // Create a temporary document for the query
         var queryDocument = new Query(normalizedQuery);
-        var queryTFIDFScores = _tfidfHandler.CalculateTFIDF(queryDocument);
+        var queryVector = _vectorizerHandler.VectorizeDocument(queryDocument);
 
-        var cosineSimilarity = new CosineSimilarity();
+        Similarity similarityCalculator = distance == "cosine" ? new CosineSimilarity() : new EuclideanSimilarity();
         var results = new List<(string FileName, double Similarity)>();
 
         foreach (var document in _documents)
         {
-            var documentTFIDFScores = _tfidfHandler.CalculateTFIDF(document);
-            double similarity = cosineSimilarity.CalculateCosineSimilarity(queryTFIDFScores, documentTFIDFScores);
-            
-            // Only add documents with a similarity greater than zero
+            var documentVector = _vectorizerHandler.VectorizeDocument(document);
+            double similarity = similarityCalculator.CalculateSimilarity(queryVector, documentVector);
+
             if (similarity > 0)
             {
                 results.Add((document.FileName, similarity));
             }
         }
 
-        // Ordenar los resultados por similitud y devolver los primeros k
         return results.OrderByDescending(r => r.Similarity).Take(k).Select(r => r.FileName).ToList();
     }
 
@@ -140,12 +152,9 @@ public class Indexer
             throw new FileNotFoundException($"Index file not found: {indexPath}");
         }
 
-        // Load the index data from the file
         var indexData = File.ReadAllText(indexPath);
-        // Deserialize the index data to restore documents and TF-IDF values
         (_documents, _tfidfValues) = DeserializeIndexData(indexData);
 
-        // Check if documents are loaded
         if (_documents == null || !_documents.Any())
         {
             throw new InvalidOperationException("No documents loaded from the index.");
@@ -154,10 +163,7 @@ public class Indexer
 
     public (List<Document>, Dictionary<string, double>) DeserializeIndexData(string indexData)
     {
-        // Assuming the indexData is in JSON format
         var indexObject = JsonSerializer.Deserialize<IndexData>(indexData);
-        
-        // Convert the deserialized data back into documents
         var documents = new List<Document>();
         foreach (var docData in indexObject.Documents)
         {
@@ -177,7 +183,6 @@ public class Indexer
         return (documents, indexObject.TFIDFValues);
     }
 
-    // Class to represent the structure of the deserialized index data
     private class IndexData
     {
         public List<DocumentData> Documents { get; set; }

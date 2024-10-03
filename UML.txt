@@ -10,7 +10,7 @@ class Document {
     - EnglishProter2Stemmer _stemmer
     + List<string> GetTerms()
     + List<string> GetUniqueTerms()
-    {abstract} - void GetFileContents()
+    {abstract} # void GetFileContents()
     - void Parse()
 }
 class TxtDocument extends Document {
@@ -34,20 +34,48 @@ class XmlDocument extends Document {
 class Query extends Document {
     # override void GetFileContents
 }
-class TFIDF {
-    - Dictionary<string, double> IDFValues {get; private set; }
-    - Dictionary<Document, Dictionary<string, double>> DocumentTFIDFScores {get; private set; }
-    + Dictionary<string, double> CalculateIDFandTFIDF(List<Document> documents)
-    - Dictionary<string, double> CalculateTFScores(Document document)
-    - Dictionary<string, double> CalculateTFIDF(Document document)
+
+class Vectorizer {
+    + Dictionary<string, double> Vector { get; protected set; }
+    {abstract} + Dictionary<string, double> VectorizeDocuments(List<Document> documents)
+    {abstract} + Dictionary<string, double> VectorizeDocument(Document query)
 }
-class CosineSimilarity {
-    + double CalculateCosineSimilarity(Dictionary<string, double> tfidfVector1, Dictionary<string, double> tfidfVector2)
+class TFIDF extends Vectorizer {
+    + override Dictionary<string, double> VectorizeDocuments(List<Document> documents)
+    + override Dictionary<string, double> VectorizeDocument(Document query)
+    - Dictionary<string, double> CalculateTFScores(Document document)
+    + Dictionary<string, double> CalculateTFIDF(Document document)
+}
+class NormalizedBagOfWords extends Vectorizer {
+    + override Dictionary<string, double> VectorizeDocuments(List<Document> documents)
+    + override Dictionary<string, double> VectorizeDocument(Document document)
 }
 
+class Similarity {
+    {abstract} + double CalculateSimilarity(Dictionary<string, double> Vector1, Dictionary<string, double> Vector2)
+}
+class CosineSimilarity extends Similarity {
+    + override double CalculateCosineSimilarity(Dictionary<string, double> Vector1, Dictionary<string, double> Vector2)
+}
+class EuclideanSimilarity extends Similarity {
+    + override double CalculateCosineSimilarity(Dictionary<string, double> Vector1, Dictionary<string, double> Vector2)
+}
+class Indexer {
+    - Vectorizer _vectorizerHandler
+    - List<Document> _documents
+    - {readonly} List<string> _supportedExtensions
+    + Dictionary<string, double> _tfidfValues
+    - Document IndexFile(string filePath)
+    - string NormalizeQuery(string query)
+    + void LoadIndex(string indexPath)
+    + (List<Document>, Dictionary<string, double>) DeserializeIndexData(string indexData)
+    + void IndexFolder(string folderPath, string type, string distance)
+    + List<string> Search(string query, int k, string distance)
+
+}
 Indexer --> Document : Indexes *
-Indexer --> TFIDF : uses >
-Indexer --> CosineSimilarity : uses >
-CosineSimilarity --> TFIDF : uses terms from >
+Indexer --> Vectorizer : uses >
+Indexer --> Similarity : uses >
+Similarity -->  Vectorizer : uses terms from >
 
 @enduml
